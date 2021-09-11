@@ -1,0 +1,132 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos_var.gni")
+import("//foundation/communication/nfc/services/nfc_standard/nfc_standard.gni")
+
+
+config("nfc_config") {
+  visibility = [ ":*" ]
+
+  defines = [ "DEBUG", "_NFC_SERVICE_READER_", "ST21NFC", "VENDOR_BUILD_FOR_FACTORY", "_NFC_SERVICE_HCE_" , "MOCK_FOR_TESTING"]
+
+  cflags_cc = [ "-fexceptions", "-O0" ]
+
+  include_dirs = [
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/distributedschedule/samgr/adapter/interfaces/innerkits/include",
+    "//foundation/appexecfwk/interfaces/innerkits/libeventhandler/include",
+    "//third_party/json/include",
+    "//third_party/openssl/include",
+    "//third_party/zlib",
+    "$NFC_ST_DIR/include/system-nfc",
+    "$NFC_ST_DIR/include/stnfc/include/hardware/st21nfc/gki/ulinux",
+    "$NFC_ST_DIR/include/stnfc/include/hardware/st21nfc/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/gki/ulinux",
+    "$NFC_ST_DIR/include/stnfc/include/src/gki/common",
+    "$NFC_ST_DIR/include/stnfc/include/src/nfc/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/nfa/include",
+    "$NFC_ST_DIR/include/stnfc/include/utils/include",
+    "$NFC_STANDARD_DIR/src/service-ncibal/include",
+    "$NFC_STANDARD_DIR/src/service-ncibal/src",
+    "$NFC_OSAL_DIR/include",
+    "$NFC_AGENT_DIR/include",
+    "$NFC_STANDARD_DIR/src/service-reader/src",
+    "$NFC_STANDARD_DIR/src/service-cardemulation/include",
+    "$NFC_STANDARD_DIR/src/service-cardemulation/src",
+    "$NFC_STANDARD_DIR/include",
+    "$NFC_STANDARD_DIR/src",
+    "include",
+  ]
+}
+
+ohos_shared_library("nfc_standard") {
+  sources = [
+    "$NFC_STANDARD_DIR/src/nfc_agent_service.cpp",
+    "$NFC_STANDARD_DIR/src/nfc_discovery_params.cpp",
+    "$NFC_STANDARD_DIR/src/nfc_permissions.cpp",
+    "$NFC_STANDARD_DIR/src/nfc_service_manager.cpp",
+    "$NFC_STANDARD_DIR/src/nfc_service.cpp",
+    "$NFC_STANDARD_DIR/src/nfc_service_handler.cpp",
+    "$NFC_STANDARD_DIR/src/nfc_service_stub.cpp",
+    "$NFC_STANDARD_DIR/src/tag_session_stub.cpp",
+    "$NFC_STANDARD_DIR/src/watch_dog.cpp",
+    "$NFC_STANDARD_DIR/src/service-ncibal/src/device_host.cpp",
+    "$NFC_STANDARD_DIR/src/service-ncibal/src/hci_manager.cpp",
+    "$NFC_STANDARD_DIR/src/service-ncibal/src/nci_bal_ce.cpp",
+    "$NFC_STANDARD_DIR/src/service-ncibal/src/nci_bal_manager.cpp",
+    "$NFC_STANDARD_DIR/src/service-ncibal/src/nci_bal_tag.cpp",
+    "$NFC_STANDARD_DIR/src/service-ncibal/src/nfc_nci_impl.cpp",
+    "$NFC_STANDARD_DIR/src/service-ncibal/src/tag_end_point.cpp",
+    "$NFC_STANDARD_DIR/src/service-reader/src/tag_dispatcher.cpp",
+    "$NFC_STANDARD_DIR/src/service-reader/src/tag_session.cpp",
+    "$NFC_STANDARD_DIR/src/utils/foreground_utils.cpp",
+    "$NFC_STANDARD_DIR/src/utils/screen_state_helper.cpp",
+    "$NFC_STANDARD_DIR/src/utils/synchronize_event.cpp",
+    "$NFC_STANDARD_DIR/src/utils/common_utils.cpp",
+
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/ability_connection_stub.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/aid_routing_adapter.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/aid_routing_filter.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/aid_routing_planner.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/aid_routing_common_event.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/aid_routing_policy_factory.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/aid_set.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/aid_string.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/apdu_channel.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/bundle_notification_stub.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_agent.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_agent_stub.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_device_host.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_event_handler.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_manager.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_service.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_service_info.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_service_info_lite.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_service_info_manager.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/card_emulation_util.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/installed_ceservice_getter.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/tag_priority_policy.cpp",
+"$NFC_STANDARD_DIR/src/service-cardemulation/src/setting_changed_event_subscriber.cpp",
+
+  ]
+
+  public_configs = [ ":nfc_config" ]
+
+  deps = [
+    "etc/init:etc",
+    "//utils/native/base:utils",
+    "//foundation/communication/nfc/prebuilts/librarys/nfc_st:nfc_nci_dep",
+    "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+    "//foundation/communication/nfc/interfaces/native_cpp/nfc_standard:nfc_agent",
+    "//base/notification/ces_standard/cesfwk/kits/native:cesfwk_kits",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "aafwk_standard:base",
+    "aafwk_standard:ability_manager",
+    "aafwk_standard:want",
+    "samgr_L2:samgr_proxy",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+  ]
+
+  part_name = "nfc_standard"
+  subsystem_name = "communication"
+}

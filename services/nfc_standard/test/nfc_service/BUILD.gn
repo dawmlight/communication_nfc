@@ -1,0 +1,88 @@
+#
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+import("//build/ohos.gni")
+import("//foundation/communication/nfc/services/nfc_standard/nfc_standard.gni")
+
+NFC_SERVICE_TEST_DIR = "$NFC_STANDARD_DIR/test/nfc_service"
+OUT_THIRD_PARTY_DIR = "../../out/ohos-arm-release/obj/third_party"
+
+config("testcase_config") {
+    defines = [ "DEBUG", "_NFC_SERVICE_READER_", "ST21NFC", "VENDOR_BUILD_FOR_FACTORY" ]
+
+    include_dirs = [
+        "//utils/native/base/include",
+        "//foundation/distributedschedule/safwk/services/safwk/include",
+        "$NFC_ST_DIR/include/system-nfc",
+        "$NFC_ST_DIR/include/stnfc/include/hardware/st21nfc/gki/ulinux",
+        "$NFC_ST_DIR/include/stnfc/include/hardware/st21nfc/include",
+        "$NFC_ST_DIR/include/stnfc/include/src/include",
+        "$NFC_ST_DIR/include/stnfc/include/src/gki/ulinux",
+        "$NFC_ST_DIR/include/stnfc/include/src/gki/common",
+        "$NFC_ST_DIR/include/stnfc/include/src/nfc/include",
+        "$NFC_ST_DIR/include/stnfc/include/src/nfa/include",
+        "$NFC_ST_DIR/include/stnfc/include/utils/include",
+        "$NFC_OSAL_DIR/include",
+        "$NFC_AGENT_DIR/include",
+        "$NFC_STANDARD_DIR/src",
+        "include",
+    ]
+    ldflags = ["-L$OUT_THIRD_PARTY_DIR/openssl", "-L$OUT_THIRD_PARTY_DIR/zlib" ]
+    libs = ["z", "crypto_static"]
+}
+
+ohos_source_set("testcase_source_set") {
+    public_configs = [
+        ":testcase_config",
+    ]
+
+    sources = [
+        "$NFC_SERVICE_TEST_DIR/src/service_nfc_main.cpp",
+    ]
+
+    cflags = []
+    if (target_cpu == "arm") {
+        cflags += [ "-DBINDER_IPC_32BIT" ]
+    }
+
+    deps = [
+        "//foundation/communication/nfc/services/nfc_standard:nfc_standard",
+        "//foundation/communication/nfc/prebuilts/librarys/nfc_st:nfc_nci_dep",
+        "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+        "//foundation/communication/nfc/interfaces/native_cpp/nfc_standard:nfc_agent",
+        "//utils/native/base:utils",
+    ]
+
+    external_deps = [
+        "hiviewdfx_hilog_native:libhilog",
+        "ipc:ipc_core",
+    ]
+}
+
+ohos_executable("nfcservicetest") {
+    deps = [
+        ":testcase_source_set",
+    ]
+
+    install_enable = true
+    part_name = "nfc_standard"
+    subsystem_name = "communication"
+}
+
+group("nfc_service_test") {
+    deps = [
+        ":nfcservicetest",
+    ]
+}

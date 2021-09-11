@@ -1,0 +1,68 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos_var.gni")
+
+SUBSYSTEM_DIR = "//foundation/communication"
+NFC_ROOT = "$SUBSYSTEM_DIR/nfc/services/nfc"
+
+config("nfc_config") {
+  visibility = [ ":*" ]
+  include_dirs = [
+    "$SUBSYSTEM_DIR/nfc/adapter/services/include",
+    "//utils/native/base/include",
+    "//utils/system/safwk/native/include",
+    "//third_party/json/single_include",
+    "include",
+  ]
+}
+
+ohos_shared_library("nfc") {
+  sources = [
+    "$NFC_ROOT/src/card_emulation/card_emulation.cpp",
+    "$NFC_ROOT/src/nfc_agent/app_callback_skeleton.cpp",
+    "$NFC_ROOT/src/nfc_agent/nfc_agent.cpp",
+    "$NFC_ROOT/src/nfc_agent/profile_parcel.cpp",
+    "$NFC_ROOT/src/nfc_manager_proxy.cpp",
+    "$NFC_ROOT/src/nfc_manager_service.cpp",
+    "$NFC_ROOT/src/nfc_manager_stub.cpp",
+    "$NFC_ROOT/src/secure_element/se_service_callback_skeleton.cpp",
+    "$NFC_ROOT/src/secure_element/secure_element.cpp",
+    "$NFC_ROOT/src/tag/tag_session.cpp",
+  ]
+
+  public_configs = [ ":nfc_config" ]
+
+  deps = [
+    "$SUBSYSTEM_DIR/nfc/adapter/services:nfc_adapter_utils",
+    "etc/init:etc",
+    "//utils/native/base:utils",
+  ]
+
+  external_deps = [
+    "appexecfwk:appexecfwk_base",
+    "appexecfwk:libeventhandler",
+    "ces:libcommonevent",
+    "hilog:libhilog",
+    "intent:base",
+    "intent:intent",
+    "ipc:ipc_core",
+    "permission:permission_sdk_cxx",
+    "safwk:system_ability_fwk",
+    "samgr:samgr_proxy",
+  ]
+
+  part_name = "nfc"
+  subsystem_name = "communication"
+}

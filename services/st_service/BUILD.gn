@@ -1,0 +1,69 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos_var.gni")
+import("//foundation/communication/nfc/nfc_standard.gni")
+
+config("nfc_config") {
+  visibility = [ ":*" ]
+
+  defines = [ "DEBUG", "ST21NFC", "VENDOR_BUILD_FOR_FACTORY", "USE_HILOG"]
+
+  cflags_cc = [ "-fexceptions" ]
+
+  include_dirs = [
+    "//utils/native/base/include",
+    "$NFC_ST_DIR/include/system-nfc",
+    "$NFC_ST_DIR/include/stnfc/include/hardware/st21nfc/gki/ulinux",
+    "$NFC_ST_DIR/include/stnfc/include/hardware/st21nfc/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/gki/ulinux",
+    "$NFC_ST_DIR/include/stnfc/include/src/gki/common",
+    "$NFC_ST_DIR/include/stnfc/include/src/nfc/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/nfa/include",
+    "$NFC_ST_DIR/include/stnfc/include/utils/include",
+    "src",
+    "include",
+  ]
+}
+
+ohos_shared_library("st_service") {
+  sources = [
+    "$ST_SERVICE_DIR/src/st_se_service_manager.cpp",
+    "$ST_SERVICE_DIR/src/st_se_service_proxy.cpp",
+    "$ST_SERVICE_DIR/src/st_se_service_stub.cpp",
+    "$ST_SERVICE_DIR/src/st_se_service.cpp",
+    "$ST_SERVICE_DIR/src/isecure_element.cpp",
+    "$ST_SERVICE_DIR/src/se_callback_proxy.cpp",
+    "$ST_SERVICE_DIR/src/se_callback_stub.cpp" 
+  ]
+
+  public_configs = [ ":nfc_config" ]
+
+  deps = [
+    "//utils/native/base:utils",
+    "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+    "//foundation/communication/nfc/prebuilts/librarys/nfc_st:nfc_nci_dep"
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "samgr_L2:samgr_proxy",
+    "safwk:system_ability_fwk",
+  ]
+
+  part_name = "se_standard"
+  subsystem_name = "communication"
+}
