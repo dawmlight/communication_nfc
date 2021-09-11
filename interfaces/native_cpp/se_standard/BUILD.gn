@@ -1,0 +1,78 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos_var.gni")
+import("//foundation/communication/nfc/nfc_standard.gni")
+
+config("se_agent_config") {
+  visibility = [ ":*" ]
+  defines = [ "DEBUG" ]
+  cflags_cc = [ "-fexceptions" ]
+  
+  include_dirs = []
+}
+
+config("se_agent_public_config") {
+  visibility = [ ":*" ]
+  
+  include_dirs = [
+    "//foundation/distributedschedule/samgr/interfaces/innerkits/samgr_proxy/include",
+    "//foundation/communication/ipc/interfaces/innerkits/ipc_core/include",
+    "//foundation/appexecfwk_L2/kits/appkit/native/app/include",
+    "$SE_AGENT_DIR/src",
+    "$SE_AGENT_DIR/include",
+    "$NFC_AGENT_DIR/include",
+  ]  
+}
+
+ohos_shared_library("se_omapi") {
+  sources = [
+    "$SE_AGENT_DIR/src/channel.cpp",
+    "$SE_AGENT_DIR/src/reader.cpp",
+    "$SE_AGENT_DIR/src/se_service.cpp",
+    "$SE_AGENT_DIR/src/session.cpp",
+    "$SE_AGENT_DIR/src/secure_element_channel_proxy.cpp",
+    "$SE_AGENT_DIR/src/secure_element_reader_proxy.cpp",
+    "$SE_AGENT_DIR/src/secure_element_service_proxy.cpp",
+    "$SE_AGENT_DIR/src/secure_element_session_proxy.cpp"
+  ]
+
+  configs = [ ":se_agent_config" ]
+
+  public_configs = [ ":se_agent_public_config" ]
+  
+  deps = [
+    "//utils/native/base:utils",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/aafwk/standard/services/abilitymgr:abilityms",
+    "//foundation/appexecfwk/standard/kits:appkit_native",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "aafwk_standard:base",
+    "aafwk_standard:ability_manager",
+    "aafwk_standard:want",    
+    "samgr_L2:samgr_proxy",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+  ]
+
+  part_name = "se_standard"
+  subsystem_name = "communication"
+}

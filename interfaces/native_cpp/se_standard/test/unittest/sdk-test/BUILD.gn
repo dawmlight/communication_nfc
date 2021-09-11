@@ -1,0 +1,89 @@
+#
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+import("//base/account/os_account/os_account.gni")
+import("//build/ohos.gni")
+import("//build/test.gni")
+import("//foundation/communication/nfc/services/nfc_standard/nfc_standard.gni")
+
+NFC_SE_TEST_DIR = "$SE_AGENT_DIR/test/unittest/sdk-test"
+
+config("testcase_config") {
+    defines = [ "DEBUG" ]
+
+    include_dirs = [
+        "//utils/native/base/include",
+        "//foundation/distributedschedule/safwk/services/safwk/include",
+        "$NFC_OSAL_DIR/include",
+        "$NFC_AGENT_DIR/include",
+        "$SE_AGENT_DIR/include",
+        "$SE_AGENT_DIR/src",
+        "$NFC_SE_TEST_DIR/include",
+        "include",
+    ]
+    
+    cflags = []
+    if (target_cpu == "arm") {
+        cflags += [ "-DBINDER_IPC_32BIT" ]
+    }
+}
+unit_test_deps = [
+    "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+    "//foundation/communication/nfc/interfaces/native_cpp/se_standard:se_omapi",
+    "//foundation/communication/nfc/interfaces/native_cpp/nfc_standard:nfc_agent",
+    "//foundation/communication/nfc/services/nfc_standard:nfc_standard",
+    "//third_party/googletest:gtest_main",
+    "//third_party/googletest:gmock_main",
+    "//utils/native/base:utils",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/aafwk/standard/services/abilitymgr:abilityms",
+    "//foundation/appexecfwk/standard/kits:appkit_native",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+]
+
+unit_test_external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "aafwk_standard:ability_manager",
+    "aafwk_standard:want",  
+    "samgr_L2:samgr_proxy",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler"        
+]
+ohos_unittest("nfcseunittest") {
+    module_out_path = "nfc/service"
+    sources = [
+        "$NFC_SE_TEST_DIR/src/channel_test.cpp",
+        "$NFC_SE_TEST_DIR/src/reader_test.cpp",
+        "$NFC_SE_TEST_DIR/src/se_service_test.cpp",
+        "$NFC_SE_TEST_DIR/src/session_test.cpp",
+        "$NFC_SE_TEST_DIR/src/main.cpp",
+    ]
+    configs = [ ":testcase_config" ]
+
+    deps = unit_test_deps
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+group("sdk_unit_test") {
+    testonly = true
+    deps = [
+        ":nfcseunittest",
+    ]
+}

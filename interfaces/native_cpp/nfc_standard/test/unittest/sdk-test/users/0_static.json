@@ -1,0 +1,33 @@
+{
+  "abilities": [
+    {
+      "ability_name": "ability1",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": ["D2760000850101", "D2560000850101"],
+          "description": "ndef",
+          "type": "normal"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability2",
+      "ability_type": "offhost_card_emulation",
+      "aid_sets": [
+        {
+          "aids": ["A010203040506070", "BBBB203040506070"],
+          "description": "",
+          "type": "secure"
+        }
+      ],
+      "environment": "eSE1",
+      "icon": "$icon",
+      "label": "label"
+    }
+  ]
+}

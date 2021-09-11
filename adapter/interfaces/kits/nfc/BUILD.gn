@@ -1,0 +1,52 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Copyright (C) 2006 The Android Open Source Project
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/config/ohos/rules.gni")
+
+SUBSYSTEM_DIR = "//foundation/communication/nfc"
+NFC_KITS_PATH = "$SUBSYSTEM_DIR/adapter/interfaces/kits/nfc"
+
+java_library("nfckit_adapter_java") {
+  java_files = [
+    "$NFC_KITS_PATH/java/ohos/nfc/NfcEventsConverter.java",
+    "$NFC_KITS_PATH/java/ohos/nfc/NfcAdapterUtils.java",
+  ]
+  deps = [ "//utils/java:utils_maple_java" ]
+
+  aosp_deps = [ "jar:framework" ]
+
+  external_deps = [
+    "ces:ces_adapter_java_maple",
+    "hilog:hilog_maple_java",
+    "intent:intent_java_maple",
+  ]
+
+  if (is_double_framework && !mrt) {
+    dex_path = "${target_out_dir}/nfc.z.jar"
+    subsystem_name = "communication"
+  }
+
+  part_name = "nfc"
+  subsystem_name = "communication"
+}
+
+ohos_maple_java("nfckit_adapter_maple_java") {
+  deps = [ ":nfckit_adapter_java" ]
+  aosp_deps = [ "maple:framework" ]
+  so_name = "nfc_adapter"
+  output_dir = "$root_build_dir/communication/nfc"
+
+  part_name = "nfc"
+  subsystem_name = "communication"
+}

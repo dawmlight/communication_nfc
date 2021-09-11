@@ -1,0 +1,37 @@
+{
+  "subsystem": "communication",
+  "parts": {    
+    "nfc_standard": {
+      "module_list": [
+        "//foundation/communication/nfc/prebuilts/librarys/nfc_st:nfc_nci_dep",
+        "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+        "//foundation/communication/nfc/interfaces/native_cpp/nfc_standard:nfc_agent",
+        "//foundation/communication/nfc/interfaces/native_cpp/nfc_standard/test:test_sdk_case",
+        "//foundation/communication/nfc/services/nfc_standard:nfc_standard",
+        "//foundation/communication/nfc/sa_profile:communication_nfc_sa_profile",
+        "//foundation/communication/nfc/services/nfc_standard/test:test_case_target"
+      ],
+      "test_list": [
+        "//foundation/communication/nfc/interfaces/native_cpp/nfc_standard/test/unittest:agent_unit_test",
+        "//foundation/communication/nfc/services/nfc_standard/test/unittest:unit_test",
+        "//foundation/communication/nfc/interfaces/native_cpp/nfc_standard/test/nfc_ce_gtestcase:nfc_ce_gtestcase"
+      ]
+    },
+
+    "se_standard": {
+      "module_list": [
+        "//foundation/communication/nfc/prebuilts/librarys/nfc_st:nfc_nci_dep",
+        "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+        "//foundation/communication/nfc/interfaces/native_cpp/se_standard:se_omapi",
+        "//foundation/communication/nfc/services/se_standard:se_standard",
+        "//foundation/communication/nfc/services/se_standard/test:se_test_target",
+        "//foundation/communication/nfc/services/st_service:st_service",
+        "//foundation/communication/nfc/services/st_service/test:se_test_target"
+      ],
+      "test_list": [
+        "//foundation/communication/nfc/interfaces/native_cpp/se_standard/test:test_se_sdk_case",
+        "//foundation/communication/nfc/services/se_standard/test/unittest:SeUnitTest"
+      ]
+    }
+  }
+}

@@ -1,0 +1,267 @@
+{
+  "abilities": [
+    {
+      "ability_name": "ability_ess_1",
+      "ability_type": "offhost_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "A00000001810010801000000BAFE02",
+            "A00000001842675072696D6547656E01",
+            "A00000015153504341534400",
+            "A00000001800000057495045414D5344",
+            "A01A202040506070",
+            "B01B202040506070"
+          ],
+          "description": "",
+          "type": "secure"
+        }
+      ],
+      "environment": "eSE1",
+      "icon": "$icon",
+      "label": "label"
+    },
+    {
+      "ability_name": "ability_hn_1",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "E01E101040506070",
+            "F01F101040506070"
+          ],
+          "description": "ndef",
+          "type": "normal"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_hs_1",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "FA1A202040506070FA1A202040506070",
+            "FB1B202040506070FB1B202040506070",
+            "FC1A202040506070FC1A202040506070",
+            "FD1B202040506070FD1B202040506070",
+            "FE1A202040506070FE1A202040506070",
+            "FF1B202040506070FF1B202040506070",
+            "F01A202040506070F01A202040506070",
+            "F01B202040506070F01B202040506070",
+            "F01C202040506070F01C202040506070",
+            "F01D202040506070F01D202040506070",
+            "F01E202040506070F01E202040506070",
+            "F01F202040506070F01F202040506070",
+            "F11A202040506070F11A202040506070",
+            "F11B202040506070F11B202040506070",
+            "F11C202040506070F11C202040506070",
+            "F11D202040506070F11D202040506070",
+            "F11E202040506070F11E202040506070",
+            "F11F202040506070F11F202040506070",
+            "F21A202040506070F21A202040506070",
+            "F21B202040506070F21B202040506070",
+            "F21C202040506070F21C202040506070",
+            "F21D202040506070F21D202040506070",
+            "F21E202040506070F21E202040506070",
+            "F21F202040506070F21F202040506070",
+            "F31A202040506070F31A202040506070",
+            "F31B202040506070F31B202040506070",
+            "F31C202040506070F31C202040506070",
+            "F31D202040506070F31D202040506070",
+            "F31E202040506070F31E202040506070",
+            "F31F202040506070F31F202040506070",
+            "F41A202040506070F41A202040506070",
+            "F41B202040506070F41B202040506070"
+          ],
+          "description": "ndef",
+          "type": "secure"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_phs_1",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "E04E313140506070*",
+            "F04F313140506070*"
+          ],
+          "description": "ndef",
+          "type": "secure"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_phs_2",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "E05E313140506070*",
+            "F05F313140506070*"
+          ],
+          "description": "ndef",
+          "type": "secure"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_phn_1",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "E06E313140506070*",
+            "F06F313140506070*"
+          ],
+          "description": "ndef",
+          "type": "normal"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_hn_2",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "E07E101040506070",
+            "F07F101040506070"
+          ],
+          "description": "ndef",
+          "type": "normal"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_hs_2",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "E03E313140506070",
+            "F03F313140506070"
+          ],
+          "description": "ndef",
+          "type": "secure"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_hsn_1",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "E08E303040506070",
+            "F08F303040506070"
+          ],
+          "description": "ndef",
+          "type": "secure"
+        },
+        {
+          "aids": [
+            "E09E303040506070",
+            "F09F303040506070"
+          ],
+          "description": "ndef",
+          "type": "normal"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_essn_1",
+      "ability_type": "host_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "A01A303040506070",
+            "B01B303040506070"
+          ],
+          "description": "ndef",
+          "type": "secure"
+        },
+        {
+          "aids": [
+            "A02A303040506070",
+            "B02B303040506070"
+          ],
+          "description": "ndef",
+          "type": "normal"
+        }
+      ],
+      "environment": "host",
+      "icon": "$icon",
+      "label": "label",
+      "unlock_device": true
+    },
+    {
+      "ability_name": "ability_esn_1",
+      "ability_type": "offhost_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "A03A303040506070",
+            "B03B303040506070"
+          ],
+          "description": "",
+          "type": "normal"
+        }
+      ],
+      "environment": "eSE1",
+      "icon": "$icon",
+      "label": "label"
+    },
+    {
+      "ability_name": "ability_ess_2",
+      "ability_type": "offhost_card_emulation",
+      "aid_sets": [
+        {
+          "aids": [
+            "A04A303040506070",
+            "B04B303040506070"
+          ],
+          "description": "",
+          "type": "secure"
+        }
+      ],
+      "environment": "eSE1",
+      "icon": "$icon",
+      "label": "label"
+    }
+  ]
+}

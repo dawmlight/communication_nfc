@@ -1,0 +1,118 @@
+import("//build/ohos.gni")
+import("//foundation/communication/nfc/services/nfc_standard/nfc_standard.gni")
+
+## Prebuilt libstnfc.so {{{
+config("nfc_st_public_config") {
+  include_dirs = [
+    "$NFC_ST_DIR/include/system-nfc",
+    "$NFC_ST_DIR/include/stnfc/include/hardware/st21nfc/gki/ulinux",
+    "$NFC_ST_DIR/include/stnfc/include/hardware/st21nfc/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/gki/ulinux",
+    "$NFC_ST_DIR/include/stnfc/include/src/gki/common",
+    "$NFC_ST_DIR/include/stnfc/include/src/nfc/include",
+    "$NFC_ST_DIR/include/stnfc/include/src/nfa/include",
+    "$NFC_ST_DIR/include/stnfc/include/utils/include",
+    "include",
+  ]
+
+  libs = [
+    "$NFC_ST_DIR/${target_cpu}/libstnfc.so",
+    "$NFC_ST_DIR/${target_cpu}/libpower.so",
+    "$NFC_ST_DIR/${target_cpu}/libchrome.so",
+    "$NFC_ST_DIR/${target_cpu}/android.system.suspend@1.0.so",
+    "$NFC_ST_DIR/${target_cpu}/android.hardware.nfc@1.0.so",
+    "$NFC_ST_DIR/${target_cpu}/android.hardware.nfc@1.1.so",
+    "$NFC_ST_DIR/${target_cpu}/android.hardware.nfc@1.2.so",
+  ]
+}
+
+ohos_prebuilt_shared_library("libstnfc") {
+  source = "$NFC_ST_DIR/${target_cpu}/libstnfc.so"
+
+  public_configs = [
+    ":nfc_st_public_config",
+  ]
+
+  part_name = "nfc_standard"
+  subsystem_name = "communication"
+}
+
+ohos_prebuilt_shared_library("libpower") {
+  source = "$NFC_ST_DIR/${target_cpu}/libpower.so"
+
+  public_configs = [
+    ":nfc_st_public_config",
+  ]
+
+  part_name = "nfc_standard"
+  subsystem_name = "communication"
+}
+
+ohos_prebuilt_shared_library("libchrome") {
+  source = "$NFC_ST_DIR/${target_cpu}/libchrome.so"
+
+  public_configs = [
+    ":nfc_st_public_config",
+  ]
+
+  part_name = "nfc_standard"
+  subsystem_name = "communication"
+}
+
+ohos_prebuilt_shared_library("android.system.suspend@1.0") {
+  source = "$NFC_ST_DIR/${target_cpu}/android.system.suspend@1.0.so"
+
+  public_configs = [
+    ":nfc_st_public_config",
+  ]
+
+  part_name = "nfc_standard"
+  subsystem_name = "communication"
+}
+
+ohos_prebuilt_shared_library("android.hardware.nfc@1.0") {
+  source = "$NFC_ST_DIR/${target_cpu}/android.hardware.nfc@1.0.so"
+
+  public_configs = [
+    ":nfc_st_public_config",
+  ]
+
+  part_name = "nfc_standard"
+  subsystem_name = "communication"
+}
+
+ohos_prebuilt_shared_library("android.hardware.nfc@1.1") {
+  source = "$NFC_ST_DIR/${target_cpu}/android.hardware.nfc@1.1.so"
+
+  public_configs = [
+    ":nfc_st_public_config",
+  ]
+
+  part_name = "nfc_standard"
+  subsystem_name = "communication"
+}
+
+ohos_prebuilt_shared_library("android.hardware.nfc@1.2") {
+  source = "$NFC_ST_DIR/${target_cpu}/android.hardware.nfc@1.2.so"
+
+  public_configs = [
+    ":nfc_st_public_config",
+  ]
+
+  part_name = "nfc_standard"
+  subsystem_name = "communication"
+}
+
+group("nci_lib") {
+    deps = [
+        ":libstnfc",
+        ":libpower",
+        ":libchrome",
+        ":android.system.suspend@1.0",
+        ":android.hardware.nfc@1.0",
+        ":android.hardware.nfc@1.1",
+        ":android.hardware.nfc@1.2",
+    ]
+}
+## Prebuilt libstnfc.so }}}

@@ -1,0 +1,51 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+SUBSYSTEM_DIR = "//foundation/communication/nfc"
+
+module_output_path = "nfc/kits"
+
+###############################################################################
+
+ohos_java_performancetest("test_nfc_performance_java_maple") {
+  java_files = [ "NfcPerformanceTest.java" ]
+
+  deps = [
+    "$SUBSYSTEM_DIR/interfaces/kits/nfckit:nfckit_java",
+    "//test/developertest/libs/jtr/common/java:perf_test_framework_java",
+    "//utils/java:utils_java",
+  ]
+
+  external_deps = [
+    "ability:abilitykit_java_maple",
+    "ans:intentagent_base_java_maple",
+    "ans:intentagent_kit_java_maple",
+    "ans:notification_java_maple",
+    "appexecfwk:appexecfwk_java_maple",
+    "appexecfwk:eventhandler_java_maple",
+    "ces:commonevent_base_java_maple",
+    "hilog:hilog_maple_java",
+    "intent:intent_java_maple",
+    "ipc:ipc_maple_java",
+    "netmanager:netkit_maple_java",
+  ]
+
+  sub_output_dir = "$module_output_path/"
+}
+
+group("performance") {
+  testonly = true
+  deps = [ ":test_nfc_performance_java_maple" ]
+}

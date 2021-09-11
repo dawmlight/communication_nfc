@@ -1,0 +1,133 @@
+#
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+import("//build/ohos.gni")
+import("//build/test.gni")
+import("//foundation/communication/nfc/nfc_standard.gni")
+
+NFC_CE_GTEST_DIR = "$NFC_AGENT_DIR/test/nfc_ce_gtestcase"
+OUT_THIRD_PARTY_DIR = "../../out/ohos-arm-release/obj/third_party"
+
+config("testcase_config") {
+    defines = [ "DEBUG", "_NFC_SERVICE_HCE_" ]
+
+    include_dirs = [
+        "//utils/native/base/include",
+        "//foundation/distributedschedule/safwk/services/safwk/include",
+        "$NFC_OSAL_DIR/include",
+        "$NFC_STANDARD_DIR/include",
+        "$NFC_AGENT_DIR/src/sdk-cardemulation/include",
+        "$NFC_AGENT_DIR/include",
+        "include",
+        "$NFC_CE_GTEST_DIR/include",
+        "$NFC_CE_GTEST_DIR/src",
+        "//third_party/openssl/include",
+        "//third_party/zlib",
+    ]
+
+    cflags_cc = [ "-fexceptions" ]
+    ldflags = ["-L$OUT_THIRD_PARTY_DIR/openssl", "-L$OUT_THIRD_PARTY_DIR/zlib" ]
+    libs = ["z", "crypto_static"]
+}
+
+unit_test_deps = [
+    "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+    "//foundation/communication/nfc/interfaces/native_cpp/nfc_standard:nfc_agent",
+    "//foundation/communication/nfc/services/nfc_standard:nfc_standard",
+    "//third_party/googletest:gtest_main",
+    "//third_party/googletest:gmock_main",
+    "//utils/native/base:utils",
+    "//foundation/distributedschedule/dmsfwk/interfaces/innerkits/uri:zuri",
+    "//foundation/aafwk/standard/frameworks/kits/ability/native:abilitykit_native",
+    "//foundation/aafwk/standard/services/abilitymgr:abilityms",
+    "//foundation/appexecfwk/standard/kits:appkit_native",
+    "//foundation/distributedschedule/safwk/interfaces/innerkits/safwk:system_ability_fwk",
+    "//base/notification/ces_standard/cesfwk/kits/native:cesfwk_kits",
+]
+
+unit_test_external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "aafwk_standard:ability_manager",
+    "aafwk_standard:want",
+    "samgr_L2:samgr_proxy",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler"
+]
+
+ohos_unittest("nfccegtestcase") {
+    module_out_path = "nfc/service"
+
+    sources = [
+        "$NFC_CE_GTEST_DIR/src/card_emulation_ability_info.cpp",
+        "$NFC_CE_GTEST_DIR/src/main.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_basic_test.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_host_service_test.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_host_test.cpp",
+        "$NFC_CE_GTEST_DIR/src/test_nfc_ce_ability.cpp",
+        "$NFC_CE_GTEST_DIR/src/test_nfc_ce_agent.cpp",
+        "$NFC_CE_GTEST_DIR/src/test_nfc_ce_app.cpp",
+        "$NFC_CE_GTEST_DIR/src/test_nfc_ce_host_service.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_host_service_data.cpp",
+        "$NFC_CE_GTEST_DIR/src/card_emulation_util.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_offhost_service_data.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_offhost_test.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_data.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_routing_test_env_dh.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_routing_test_env_se.cpp",
+        "$NFC_CE_GTEST_DIR/src/routing_table_common_event.hpp",
+        "$NFC_CE_GTEST_DIR/src/setting_broadcast.hpp",
+        "$NFC_CE_GTEST_DIR/src/bundle_changed_broadcast.hpp",
+        "$NFC_CE_GTEST_DIR/src/tc_system_event_test.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_offhost_test_env_se.cpp",
+        "$NFC_CE_GTEST_DIR/src/tc_nfc_ce_host_service_test env_dh.cpp",
+    ]
+
+    configs = [ ":testcase_config" ]
+
+    deps = unit_test_deps
+    external_deps = unit_test_external_deps
+
+    part_name = "nfc_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("nfc_ce_stability") {
+    module_out_path = "nfc/service"
+
+    sources = [
+        "$NFC_CE_GTEST_DIR/src/main.cpp",
+        "$NFC_CE_GTEST_DIR/src/nfc_ce_stability_test.cpp",
+        "$NFC_CE_GTEST_DIR/src/test_nfc_ce_app.cpp",
+        "$NFC_CE_GTEST_DIR/src/test_nfc_ce_host_service.cpp",
+    ]
+
+    configs = [ ":testcase_config" ]
+
+    deps = unit_test_deps
+    external_deps = unit_test_external_deps
+
+    part_name = "nfc_standard"
+    subsystem_name = "communication"
+}
+
+group("nfc_ce_gtestcase") {
+    testonly = true
+    deps = [
+        ":nfccegtestcase",
+        ":nfc_ce_stability"
+    ]
+}

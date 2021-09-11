@@ -1,0 +1,59 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/test.gni")
+
+module_output_path = "nfc/kits"
+
+SUBSYSTEM_DIR = "//foundation/communication/nfc"
+
+###############################################################################
+
+ohos_java_unittest("unittest_nfckit_java_maple") {
+  java_files = [
+    "unittest/src/ohos/nfc/NfcControllerTest.java",
+    "unittest/src/ohos/nfc/TagProtocolTest.java",
+    "unittest/src/ohos/nfc/SecureElementTest.java",
+    "unittest/src/ohos/nfc/CardEmulationTest.java",
+  ]
+
+  deps = [
+    "$SUBSYSTEM_DIR/adapter/interfaces/kits/nfc:nfckit_adapter_java",
+    "$SUBSYSTEM_DIR/interfaces/kits/nfckit:nfckit_java",
+  ]
+
+  external_deps = [
+    "ability:abilitykit_java_maple",
+    "ability:dataability_java_maple",
+    "ans:intentagent_base_java_maple",
+    "ans:intentagent_kit_java_maple",
+    "appexecfwk:appexecfwk_base_java_maple",
+    "appexecfwk:appexecfwk_java_maple",
+    "ces:ces_adapter_java_maple",
+    "hilog:hilog_java",
+    "intent:intent_java_maple",
+    "ipc:ipc_maple_java",
+    "samgr:samgr_java",
+  ]
+
+  sub_output_dir = module_output_path
+
+  part_name = "nfc"
+  subsystem_name = "communication"
+}
+group("unittest") {
+  testonly = true
+  deps = []
+
+  deps += [ ":unittest_nfckit_java_maple" ]
+}

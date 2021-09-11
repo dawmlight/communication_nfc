@@ -1,0 +1,109 @@
+# Copyright (C) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+import("//build/ohos.gni")
+import("//build/ohos_var.gni")
+import("//foundation/communication/nfc/nfc_standard.gni")
+
+config("nfc_config") {
+  visibility = [ ":*" ]
+
+  defines = [ "DEBUG", "ST21NFC", "VENDOR_BUILD_FOR_FACTORY", "USE_HILOG"]
+
+  cflags_cc = [ "-fexceptions" ]
+
+  include_dirs = [
+    "//third_party/openssl/include",
+    "$ST_SERVICE_DIR/include",
+    "$NFC_OSAL_DIR/include",
+    "$SE_AGENT_DIR/include",
+    "$SE_STANDARD_DIR/include",
+    "$SE_STANDARD_DIR/src",
+    "$SE_STANDARD_DIR/src/pkcs15",
+    "$SE_STANDARD_DIR/src/general-data-objects",
+    "include",
+  ]
+}
+
+ohos_shared_library("se_standard") {
+  sources = [
+    "$SE_STANDARD_DIR/src/utils/common_utils.cpp",
+    "$SE_STANDARD_DIR/src/apdu_command_validator.cpp",
+    "$SE_STANDARD_DIR/src/access_control_enforcer.cpp",
+    "$SE_STANDARD_DIR/src/channel_access_rule.cpp",
+    "$SE_STANDARD_DIR/src/access_rule_application_controller.cpp",
+    "$SE_STANDARD_DIR/src/access_rule_files_controller.cpp",
+    "$SE_STANDARD_DIR/src/access_rule_files_channel.cpp",
+    "$SE_STANDARD_DIR/src/access_rule_cache.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/aid_ref_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/apdu_ar_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/ar_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/ber_tlv.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/hash_ref_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/nfc_ar_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/pkg_ref_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/ref_ar_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/ref_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/response_all_ar_do.cpp",
+    "$SE_STANDARD_DIR/src/general-data-objects/response_refresh_tag_do.cpp",
+    "$SE_STANDARD_DIR/src/pkcs15/access_control_conditions.cpp",
+    "$SE_STANDARD_DIR/src/pkcs15/access_control_main.cpp",
+    "$SE_STANDARD_DIR/src/pkcs15/access_control_rules.cpp",
+    "$SE_STANDARD_DIR/src/pkcs15/der_parser.cpp",
+    "$SE_STANDARD_DIR/src/pkcs15/dir.cpp",
+    "$SE_STANDARD_DIR/src/pkcs15/dodf.cpp",
+    "$SE_STANDARD_DIR/src/pkcs15/ef.cpp",
+    "$SE_STANDARD_DIR/src/pkcs15/odf.cpp",
+    "$SE_STANDARD_DIR/src/se_channel.cpp",
+    "$SE_STANDARD_DIR/src/secure_element_channel.cpp",
+    "$SE_STANDARD_DIR/src/secure_element_session.cpp",
+    "$SE_STANDARD_DIR/src/secure_element_reader.cpp",
+    "$SE_STANDARD_DIR/src/secure_element_service.cpp",
+    "$SE_STANDARD_DIR/src/secure_element_channel_stub.cpp",
+    "$SE_STANDARD_DIR/src/secure_element_session_stub.cpp",
+    "$SE_STANDARD_DIR/src/secure_element_reader_stub.cpp",
+    "$SE_STANDARD_DIR/src/secure_element_service_stub.cpp",
+    "$SE_STANDARD_DIR/src/se_service_manager.cpp",
+    "$SE_STANDARD_DIR/src/se_end_service.cpp",
+    "$SE_STANDARD_DIR/src/terminal.cpp",
+  ]
+
+  public_configs = [ ":nfc_config" ]
+
+  deps = [
+    "//utils/native/base:utils",
+    "//third_party/openssl:libcrypto_static",
+    "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+    "//foundation/communication/nfc/prebuilts/librarys/nfc_st:nfc_nci_dep",
+    "//foundation/communication/nfc/interfaces/native_cpp/se_standard:se_omapi",
+    "//foundation/communication/nfc/services/st_service:st_service",
+  ]
+
+  external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "aafwk_standard:base",
+    "aafwk_standard:ability_manager",
+    "aafwk_standard:want",
+    "samgr_L2:samgr_proxy",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "ces_standard:cesfwk_innerkits",
+    "ces_standard:cesfwk_kits",
+    "safwk:system_ability_fwk"
+  ]
+
+  part_name = "se_standard"
+  subsystem_name = "communication"
+}

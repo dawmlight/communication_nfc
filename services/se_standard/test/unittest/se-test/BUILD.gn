@@ -1,0 +1,701 @@
+#
+# Copyright (c) 2021 Huawei Device Co., Ltd.
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+import("//build/test.gni")
+import("//foundation/communication/nfc/nfc_standard.gni")
+
+SE_UNIT_TEST_DIR = "$SE_STANDARD_DIR/test/unittest/se-test"
+
+config("se_unit_test_config") {
+    visibility = [ ":*" ]
+
+    include_dirs = [
+        "//utils/native/base/include",
+        "//third_party/openssl/include",
+        "$ST_SERVICE_DIR/include",
+        "$NFC_OSAL_DIR/include",
+        "$SE_AGENT_DIR/include",
+        "$SE_STANDARD_DIR/include",
+        "$SE_STANDARD_DIR/src",
+        "$SE_STANDARD_DIR/src/pkcs15",
+        "$SE_STANDARD_DIR/src/general-data-objects",
+        "include",
+        "src"
+    ]
+
+    defines = [ "DEBUG", "ST21NFC", "VENDOR_BUILD_FOR_FACTORY" ]
+
+    cflags_cc = [ "-fexceptions" ]
+}
+
+unit_test_deps = [
+    "//utils/native/base:utils",
+    "//third_party/openssl:libcrypto_static",
+    "//foundation/communication/nfc/prebuilts/librarys/nfc_st:nfc_nci_dep",
+    "//foundation/communication/nfc/interfaces/native_cpp/osal:osal",
+    "//foundation/communication/nfc/interfaces/native_cpp/se_standard:se_omapi",
+    "//foundation/communication/nfc/services/se_standard:se_standard",
+    "//foundation/communication/nfc/services/st_service:st_service",
+    "//third_party/googletest:gtest_main",
+    "//third_party/googletest:gmock_main",
+]
+
+unit_test_external_deps = [
+    "hiviewdfx_hilog_native:libhilog",
+    "ipc:ipc_core",
+    "aafwk_standard:base",
+    "aafwk_standard:ability_manager",
+    "aafwk_standard:want",
+    "samgr_L2:samgr_proxy",
+    "appexecfwk_standard:appexecfwk_base",
+    "appexecfwk_standard:appexecfwk_core",
+    "appexecfwk_standard:libeventhandler",
+    "ces_standard:cesfwk_innerkits",
+    "ces_standard:cesfwk_kits",
+    "safwk:system_ability_fwk",
+]
+
+unit_test_src = [
+    "$SE_UNIT_TEST_DIR/src/main.cpp",
+    "$SE_UNIT_TEST_DIR/src/base_test.cpp",
+]
+
+test_out_path = "se/service"
+
+ohos_unittest("secure_element_service_test") {
+    module_out_path = test_out_path
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/secure_element_service_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("terminal_test") {
+    module_out_path = test_out_path
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/terminal_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("secure_element_session_test") {
+    module_out_path = test_out_path
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/secure_element_session_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("secure_element_reader_test") {
+    module_out_path = test_out_path
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/secure_element_reader_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("secure_element_channel_test") {
+    module_out_path = test_out_path
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/secure_element_channel_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("se_channel_test") {
+    module_out_path = test_out_path
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/se_channel_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("apdu_command_validator_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/apdu_command_validator_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("channel_access_rule_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/channel_access_rule_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("arf_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/arf_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("ara_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/ara_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("access_rule_cache_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/access_rule_cache_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("access_control_enforcer_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/access_control_enforcer_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("access_control_conditions_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-pkcs15/access_control_conditions_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("access_control_main_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-pkcs15/access_control_main_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("access_control_rules_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-pkcs15/access_control_rules_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("der_parser_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-pkcs15/der_parser_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("dir_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-pkcs15/dir_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("dodf_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-pkcs15/dodf_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("ef_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-pkcs15/ef_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("odf_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-pkcs15/odf_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("aid_ref_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/aid_ref_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("apdu_ar_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/apdu_ar_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("ar_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/ar_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("ber_tlv_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/ber_tlv_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("hash_ref_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/hash_ref_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("nfc_ar_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/nfc_ar_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("ref_ar_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/ref_ar_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("ref_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/ref_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("response_all_ar_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/response_all_ar_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("response_refresh_tag_do_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/test-general-data-objects/response_refresh_tag_do_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+ohos_unittest("nfc_tc_se_test") {
+    module_out_path = "se/service"
+
+    sources = [
+        "$SE_UNIT_TEST_DIR/src/nfc_tc_se_test.cpp",
+    ]
+
+    sources += unit_test_src
+
+    configs = [ ":se_unit_test_config" ]
+
+    deps = unit_test_deps
+
+    external_deps = unit_test_external_deps
+
+    part_name = "se_standard"
+    subsystem_name = "communication"
+}
+
+group("se_unit_test") {
+    testonly = true
+
+    deps = [
+       ":secure_element_service_test",
+       ":terminal_test",
+       ":secure_element_reader_test",
+       ":secure_element_session_test",
+       ":secure_element_channel_test",
+       ":se_channel_test",
+       ":apdu_command_validator_test",
+       ":channel_access_rule_test",
+       ":arf_test",
+       ":ara_test",
+       ":access_rule_cache_test",
+       ":access_control_enforcer_test",
+       ":access_control_conditions_test",
+       ":access_control_main_test",
+       ":access_control_rules_test",
+       ":der_parser_test",
+       ":dir_test",
+       ":dodf_test",
+       ":ef_test",
+       ":odf_test",
+       ":aid_ref_do_test",
+       ":apdu_ar_do_test",
+       ":ar_do_test",
+       ":ber_tlv_test",
+       ":hash_ref_do_test",
+       ":nfc_ar_do_test",
+       ":ref_ar_do_test",
+       ":ref_do_test",
+       ":response_all_ar_do_test",
+       ":response_refresh_tag_do_test",
+       ":nfc_tc_se_test"
+    ]
+}
